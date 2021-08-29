@@ -1,0 +1,48 @@
+@charset "UTF-8";
+
+@media screen and (min-width: 770px) {
+    thead {
+        height: 70px;
+    }
+
+    tr {
+        border-bottom: solid 1px #dee2e6;
+        height: 70px;
+    }
+
+    .table-size {
+        width: 700px;
+        margin: 0 auto;
+    }
+    .table-ttl {
+        font-size: 18px;
+        font-weight: bold;
+    }
+
+    .table-d {
+        font-size: 15px;
+    }
+}
+
+@media screen and (max-width: 768px) { /*ウィンドウ幅が最大768pxまでの場合に適用*/
+    thead {
+        height: 50px;
+    }
+
+    tr {
+        border-bottom: solid 1px #dee2e6;
+        height: 50px;
+    }
+
+    .table-size {
+        width: 800px;
+    }
+    .table-ttl {
+        font-size: 150px;
+        font-weight: bold;
+    }
+}
+
+@media screen and (max-width: 490px) { /*ウィンドウ幅が最大490pxまでの場合に適用*/
+
+}
