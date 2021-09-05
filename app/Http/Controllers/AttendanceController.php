@@ -83,6 +83,8 @@ class AttendanceController extends Controller
     {
         $user = Auth::user();
         $timestamp = Work::where('user_id', $user->id)->latest()->first();
+
+        // 出勤済み、退勤前、休憩前の場合打刻
         if ($timestamp->start_work && (empty($timestamp->end_work)) && (empty($timestamp->start_rest))) {
             $timestamp->update([
                 'start_rest' => Carbon::now()
@@ -98,6 +100,8 @@ class AttendanceController extends Controller
     {
         $user = Auth::user();
         $timestamp = Work::where('user_id', $user->id)->latest()->first();
+
+        // 休憩済み、退勤前の場合打刻
         if($timestamp->start_rest && (empty($timestamp->end_rest))) {
             $timestamp->update([
                 'end_rest' => Carbon::now()
