@@ -16,7 +16,10 @@ class CreateRestsTable extends Migration
         Schema::create('rests', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('work_id');
-            $table->foreign('work_id')->references('id')->on('works')->onDelete('cascade');
+            $table->foreign('work_id')
+                ->references('id')
+                ->on('works')
+                ->onDelete('cascade');
             $table->time('start_rest')->nullable();
             $table->time('end_rest')->nullable();
             $table->timestamp('created_at')->useCurrent()->nullable();

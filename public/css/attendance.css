@@ -8,7 +8,7 @@
 }
 
 @media screen and (max-width: 2600px) { /*ウィンドウ幅が1200pxまでの場合*/
-    .btn1, .btn2, .btn3, .btn4 {
+    #btn1, #btn2, #btn3, #btn4 {
         background-color: white;
         color: black;
         display: inline-block;
@@ -19,11 +19,11 @@
         height: 140px;
     }
 
-    .btn1, .btn2 {
+    #btn1, #btn2 {
         margin-bottom: 40px;
     }
 
-    .btn1, .btn3 {
+    #btn1, #btn3 {
         margin-right: 40px;
     }
 
@@ -35,7 +35,7 @@
         font-size: 20px;
     }
 
-    .btn1, .btn2, .btn3, .btn4 {
+    #btn1, #btn2, #btn3, #btn4 {
         background-color: white;
         color: black;
         display: inline-block;
@@ -46,11 +46,11 @@
         height: 80px;
     }
 
-    .btn1, .btn2 {
+    #btn1, #btn2 {
         margin-bottom: 10px;
     }
 
-    .btn1, .btn3 {
+    #btn1, #btn3 {
         margin-right: 10px;
     }
 
@@ -62,7 +62,7 @@
         font-size: 15px;
     }
 
-    .btn1, .btn2, .btn3, .btn4 {
+    #btn1, #btn2, #btn3, #btn4 {
         background-color: white;
         color: black;
         display: inline-block;
@@ -73,11 +73,11 @@
         height: 60px;
     }
 
-    .btn1, .btn2 {
+    #btn1, #btn2 {
         margin-bottom: 10px;
     }
 
-    .btn2, .btn4 {
+    #btn2, #btn4 {
         margin-right: 10px;
     }
 }

@@ -9,18 +9,19 @@ class Work extends Model
 {
     use HasFactory;
 
-    public function user()
-{
-    return $this->belongsTo('App\Models\User');
-}
+    protected $table = 'works';
 
-    public function rests() {
-        return $this->hasMany('App\Models\Rest');
-    }
+    protected $primaryKey = 'id';
 
     protected $fillable = [
         'start_work',
         'end_work',
         'attendance_date',
     ];
+
+    // A work belogs to a user
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

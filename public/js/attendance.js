@@ -11,12 +11,12 @@ function workout() {
     document.getElementById("btn4").disabled = true;
 }
 
-function breakin() {
+function restin() {
     document.getElementById("btn3").disabled = true;
     document.getElementById("btn4").disabled = false;
 }
 
-function breakout() {
+function restout() {
     document.getElementById("btn3").disabled = false;
     document.getElementById("btn4").disabled = true;
 }

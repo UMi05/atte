@@ -18,17 +18,18 @@ use App\Http\Controllers\CheckController;
 
 Route::get('/', function () {
     return view('auth/login');
-});
+})->middleware('auth');
 
 Auth::routes();
 
-Route::get('/app/attendance', [AttendanceController::class, 'index'])->name('home');
+Route::get('/attendance', [AttendanceController::class, 'index'])->name('home');
 //出退勤打刻
-Route::post('/app/attendance', [AttendanceController::class, 'workin']);
-Route::post('/app/attendance', [AttendanceController::class, 'workout']);
+Route::post('/attendance/workin', [AttendanceController::class, 'workIn']);
+Route::post('/attendance/workout', [AttendanceController::class, 'workOut']);
+
 //休憩打刻
-Route::post('/app/attendance', [AttendanceController::class, 'breakin']);
-Route::post('/app/attendance', [AttendanceController::class, 'breakout']);
+Route::post('/attendance/restin', [AttendanceController::class, 'restIn']);
+Route::post('/attendance/restout', [AttendanceController::class, 'restOut']);
 
 //日付一覧
-Route::get('/app/check', [CheckController::class, 'index'])->name('check');
+Route::get('/attendance/check', [CheckController::class, 'index'])->name('check');

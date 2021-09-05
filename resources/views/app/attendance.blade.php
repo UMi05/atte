@@ -4,31 +4,34 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="greeting py-5 h1">
-            {{ Auth::user()->name }}さん お疲れ様です !
+            {{ Auth::user()->name }}さん
+            @if(Session::has('message'))
+                <p>{{ session('message') }}</p>
+            @endif
         </div>
     </div>
     <div class="atte-btn row justify-content-center">
         <div>
-            <form class="timestamp" action="/app/attendance" >
+            <form action="/workin" method="POST">
                 @csrf
-                <button id="btn1" class="btn btn1" onclick="workin()">出勤</button>
+                <button type="submit" id="btn1" onclick="workin()">出勤</button>
             </form>
 
-            <form class="timestamp" action="/app/attendance" >
+            <form action="/restin" method="POST">
                 @csrf
-                <button class="btn3" id="btn3" onclick="breakin()" disabled>休憩開始</button>
+                <button type="submit" id="btn3" onclick="restin()" disabled>休憩開始</button>
             </form>
         </div>
 
         <div>
-            <form class="timestamp" action="/app/attendance" >
+            <form action="/workout" method="POST">
                 @csrf
-                <button id="btn2" class="btn2" onclick="workout()" disabled>退勤</button>
+                <button type="submit" id="btn2" onclick="workout()" disabled>退勤</button>
             </form>
 
-            <form class="timestamp" action="/app/attendance" >
+            <form action="/restout" method="POST">
                 @csrf
-                <button class="btn4" id="btn4" onclick="breakout()" disabled>休憩終了</button>
+                <button type="submit" id="btn4" onclick="restout()" disabled>休憩終了</button>
             </form>
         </div>
 
