@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\CheckController;
 
@@ -22,14 +23,13 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/attendance', [AttendanceController::class, 'index'])->name('home');
+Route::get('/app/attendance', [HomeController::class, 'index'])->name('home');
 //出退勤打刻
-Route::post('/attendance/workin', [AttendanceController::class, 'workIn']);
-Route::post('/attendance/workout', [AttendanceController::class, 'workOut']);
-
+Route::post('/workin', [AttendanceController::class, 'workIn'])->name('workin');
+Route::post('/workout', [AttendanceController::class, 'workOut'])->name('workout');
 //休憩打刻
-Route::post('/attendance/restin', [AttendanceController::class, 'restIn']);
-Route::post('/attendance/restout', [AttendanceController::class, 'restOut']);
+Route::post('/restin', [AttendanceController::class, 'restIn'])->name('restin');
+Route::post('/restout', [AttendanceController::class, 'restOut'])->name('restout');
 
 //日付一覧
-Route::get('/attendance/check', [CheckController::class, 'index'])->name('check');
+Route::get('/app/check', [CheckController::class, 'index'])->name('check');

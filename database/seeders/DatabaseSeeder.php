@@ -16,8 +16,8 @@ class DatabaseSeeder extends Seeder
         // \App\Models\User::factory(1)->create();
         // \App\Models\Work::factory(1)->create();
         // \App\Models\Rest::factory(1)->create();
-        // $this->call(UsersTableSeeder::class);
-        // $this->call(WorksTableSeeder::class);
+        $this->call(UsersTableSeeder::class);
+        $this->call(WorksTableSeeder::class);
         $this->call(RestsTableSeeder::class);
     }
 }

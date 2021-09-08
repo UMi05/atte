@@ -25,7 +25,7 @@
     <div>
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
-                <a class="navbar-brand" style="font-size: 30px;" href="{{ url('/app/attendance') }}">
+                <a class="navbar-brand" style="font-size: 30px;" href="{{ route('home') }}">
                     {{ config('app.name', 'Atte') }}
                 </a>
 

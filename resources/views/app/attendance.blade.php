@@ -3,35 +3,39 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="greeting py-5 h1">
-            {{ Auth::user()->name }}さん
-            @if(Session::has('message'))
-                <p>{{ session('message') }}</p>
+        <div class="greeting py-5">
+            <h1>{{ Auth::user()->name }}さん</h1>
+            @if (session('message'))
+                {{ session('message') }}
             @endif
         </div>
     </div>
     <div class="atte-btn row justify-content-center">
         <div>
-            <form action="/workin" method="POST">
+            <form action="{{ route('workin') }}" method="POST">
                 @csrf
-                <button type="submit" id="btn1" onclick="workin()">出勤</button>
+                <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
+                <button type="submit" id="btn1" onclick="workin()" name="workIn" value="workIn">出勤</button>
             </form>
 
-            <form action="/restin" method="POST">
+            <form action="{{ route('restin') }}" method="POST">
                 @csrf
-                <button type="submit" id="btn3" onclick="restin()" disabled>休憩開始</button>
+                <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
+                <button type="submit" id="btn3" onclick="restin()" disabled name="restIn" value="restIn">休憩開始</button>
             </form>
         </div>
 
         <div>
-            <form action="/workout" method="POST">
+            <form action="{{ route('workout') }}" method="POST">
                 @csrf
-                <button type="submit" id="btn2" onclick="workout()" disabled>退勤</button>
+                <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
+                <button type="submit" id="btn2" onclick="workout()" disabled name="workOut" value="workOut">退勤</button>
             </form>
 
-            <form action="/restout" method="POST">
+            <form action="{{ route('restout') }}" method="POST">
                 @csrf
-                <button type="submit" id="btn4" onclick="restout()" disabled>休憩終了</button>
+                <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
+                <button type="submit" id="btn4" onclick="restout()" disabled name="restOut" value="restOut">休憩終了</button>
             </form>
         </div>
 

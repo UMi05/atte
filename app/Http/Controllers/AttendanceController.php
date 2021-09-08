@@ -10,27 +10,7 @@ use Carbon\Carbon;
 
 class AttendanceController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
-    public function index()
-    {
-        return view('/app/attendance');
-    }
-
-    public function workIn()
+    public function workIn(Request $request)
     {
         $user = Auth::user();
 
@@ -64,7 +44,7 @@ class AttendanceController extends Controller
         return redirect()->back()->with('message', '出勤打刻が完了しました');
     }
 
-    public function workOut()
+    public function workOut(Request $request)
     {
         $user = Auth::user();
         $timestamp = Work::where('user_id', $user->id)->latest()->first();
@@ -79,7 +59,7 @@ class AttendanceController extends Controller
         return redirect()->back()->with('message', 'お疲れ様でした。');
     }
 
-    public function restIn()
+    public function restIn(Request $request)
     {
         $user = Auth::user();
         $timestamp = Work::where('user_id', $user->id)->latest()->first();
@@ -96,7 +76,7 @@ class AttendanceController extends Controller
 
     }
 
-    public function restOut()
+    public function restOut(Request $request)
     {
         $user = Auth::user();
         $timestamp = Work::where('user_id', $user->id)->latest()->first();

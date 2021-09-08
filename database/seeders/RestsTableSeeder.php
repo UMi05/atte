@@ -21,6 +21,7 @@ class RestsTableSeeder extends Seeder
             'end_rest' => '13:00:00',
         ];
         DB::table('rests')->insert($param);
+
         $param = [
             'id' => '2',
             'work_id' => '1',

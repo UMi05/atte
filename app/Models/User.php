@@ -59,7 +59,7 @@ class User extends Authenticatable
         $this->notify(new UserResetPassword($token));
     }
 
-    public function work()
+    public function works()
     {
         return $this->hasMany(Work::class);
     }

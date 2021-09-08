@@ -22,5 +22,14 @@ class WorksTableSeeder extends Seeder
             'attendance_date' => '2021-08-29'
         ];
         DB::table('works')->insert($param);
+
+        $param = [
+            'id' => '2',
+            'user_id' => '2',
+            'start_work' => '8:00:00',
+            'end_work' => '18:00:00',
+            'attendance_date' => '2021-08-29'
+        ];
+        DB::table('works')->insert($param);
     }
 }

@@ -14,6 +14,7 @@ class Work extends Model
     protected $primaryKey = 'id';
 
     protected $fillable = [
+        'user_id',
         'start_work',
         'end_work',
         'attendance_date',
