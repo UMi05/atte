@@ -1,13 +1,12 @@
 @charset "UTF-8";
 
-
-:disabled {
-    color: black;
-    background-color: #ccc;
-    opacity: 0.5;
-}
-
 @media screen and (max-width: 2600px) { /*ウィンドウ幅が1200pxまでの場合*/
+
+    .msg {
+        color: blue;
+        font-size: 20px;
+    }
+
     #btn1, #btn2, #btn3, #btn4 {
         background-color: white;
         color: black;
@@ -31,8 +30,9 @@
 
 @media screen and (max-width: 768px) { /*ウィンドウ幅が最大767pxまでの場合に適用*/
 
-    .greeting {
-        font-size: 20px;
+    .msg {
+        color: blue;
+        font-size: 15px;
     }
 
     #btn1, #btn2, #btn3, #btn4 {
@@ -58,8 +58,9 @@
 
 @media screen and (max-width: 490px) { /*ウィンドウ幅が最大479pxまでの場合に適用*/
 
-    .greeting {
-        font-size: 15px;
+    .msg {
+        color: blue;
+        font-size: 10px;
     }
 
     #btn1, #btn2, #btn3, #btn4 {
