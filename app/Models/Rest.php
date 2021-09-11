@@ -14,4 +14,8 @@ class Rest extends Model
         'start_rest',
         'end_rest',
     ];
+
+    public function work() {
+        return $this->belongsTo(Work::class);
+    }
 }
