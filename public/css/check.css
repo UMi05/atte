@@ -25,6 +25,7 @@
 }
 
 @media screen and (max-width: 768px) { /*ウィンドウ幅が最大768pxまでの場合に適用*/
+
     thead {
         height: 50px;
     }
@@ -35,14 +36,33 @@
     }
 
     .table-size {
-        width: 800px;
+        width: 500px;
+        margin: 0 auto;
     }
     .table-ttl {
-        font-size: 150px;
+        font-size: 15px;
         font-weight: bold;
     }
 }
 
 @media screen and (max-width: 490px) { /*ウィンドウ幅が最大490pxまでの場合に適用*/
+
+    thead {
+        height: 50px;
+    }
+
+    tr {
+        border-bottom: solid 1px #dee2e6;
+        height: 50px;
+    }
+
+    .table-size {
+        width: 380px;
+        margin: 0 auto;
+    }
+    .table-ttl {
+        font-size: 10px;
+        font-weight: bold;
+    }
 
 }
