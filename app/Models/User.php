@@ -59,8 +59,13 @@ class User extends Authenticatable
         $this->notify(new UserResetPassword($token));
     }
 
+    public function date()
+    {
+        return $this->belongsToMany(Date::class);
+    }
+
     public function works()
     {
-        return $this->hasMany(Work::class);
+        return $this->hasMany(Date::class);
     }
 }

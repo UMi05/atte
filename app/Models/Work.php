@@ -15,15 +15,25 @@ class Work extends Model
 
     protected $fillable = [
         'user_id',
+        'date_id',
         'start_work',
         'end_work',
-        'attendance_date',
     ];
 
-    // A work belogs to a user
+    protected $dates = [
+        'start_work',
+        'end_work'
+    ];
+
+
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function date()
+    {
+        return $this->belongsTo(Date::class);
     }
 
     public function rests() {
