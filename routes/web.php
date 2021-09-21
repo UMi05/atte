@@ -23,7 +23,8 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/app/attendance', [HomeController::class, 'index'])->name('home');
+Route::get('attendance', [HomeController::class, 'index'])->name('home');
+
 //出退勤打刻
 Route::post('/workin', [AttendanceController::class, 'workIn'])->name('workin');
 Route::post('/workout', [AttendanceController::class, 'workOut'])->name('workout');
@@ -32,4 +33,4 @@ Route::post('/restin', [AttendanceController::class, 'restIn'])->name('restin');
 Route::post('/restout', [AttendanceController::class, 'restOut'])->name('restout');
 
 //日付一覧
-Route::get('/app/check', [CheckController::class, 'index'])->name('check');
+Route::get('/check', [CheckController::class, 'index'])->name('check');
