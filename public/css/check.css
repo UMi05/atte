@@ -5,10 +5,6 @@
     margin: 0 auto;
 }
 
-.link-left, .link-righr {
-    padding-right: 300px;
-}
-
 @media screen and (min-width: 770px) {
     thead {
         height: 70px;
@@ -22,6 +18,10 @@
     .date-line {
         position: relative;
         text-align: center;
+    }
+
+    .link-left, .link-righr {
+        padding-right: 300px;
     }
 
     .date {
@@ -54,6 +54,10 @@
         text-align: center;
     }
 
+    .link-left, .link-righr {
+        padding-right: 300px;
+    }
+
     .date {
         display: inline-block;
     }
@@ -62,7 +66,7 @@
         width: 500px;
         margin: 0 auto;
     }
-    .table-ttl {
+    .table-ttl, .table-item {
         font-size: 15px;
         font-weight: bold;
     }
@@ -77,23 +81,40 @@
     tr {
         border-bottom: solid 1px #dee2e6;
         height: 50px;
+        font-size: 10px;
+    }
+
+    .msg {
+        font-size: 15px;
     }
 
     .date-line {
         position: relative;
         text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .link-left, .link-righr {
+        padding-right: 180px;
     }
 
     .date {
         display: inline-block;
+        font-size: 25px;
     }
 
     .table-size {
-        width: 380px;
+        width: 350px;
         margin: 0 auto;
     }
+
     .table-ttl {
         font-size: 10px;
+        font-weight: bold;
+    }
+
+    .table-item {
+        font-size: 6px;
         font-weight: bold;
     }
 

@@ -19,7 +19,7 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
-<body>
+<body style="display: flex; flex-direction: column; min-height: 100vh;">
     <div id="auth">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
@@ -29,10 +29,10 @@
             </div>
         </nav>
 
-        <main class="py-4" style="height: max; position: relative; height: 100%;">
+        <main class="py-4" style="height: max; position: relative; height: 100vh;">
             @yield('content')
         </main>
-        <footer style="display: flex; justify-content: center; align-items: center; position: absolute; bottom: 0; background-color: white; height: 50px; width: 100%;">
+        <footer style="display: flex; justify-content: center; align-items: center; background-color: white; height: 50px; width: 100%;">
             <a style="text-align: center; font-weight: bolder; font-size: 15px; text-decoration: none; color: black;" href="/">Atte, inc.</a>
         </footer>
     </div>
