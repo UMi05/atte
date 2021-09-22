@@ -1,5 +1,14 @@
 @charset "UTF-8";
 
+.simple {
+    height: 0;
+    margin: 0 auto;
+}
+
+.link-left, .link-righr {
+    padding-right: 200px;
+}
+
 @media screen and (min-width: 770px) {
     thead {
         height: 70px;
@@ -10,18 +19,24 @@
         height: 70px;
     }
 
+    .date-line {
+        position: relative;
+        text-align: center;
+    }
+
+    .date {
+        display: inline-block;
+    }
+
     .table-size {
         width: 700px;
         margin: 0 auto;
     }
-    .table-ttl {
+    .table-ttl, .table-item {
         font-size: 18px;
         font-weight: bold;
     }
 
-    .table-d {
-        font-size: 15px;
-    }
 }
 
 @media screen and (max-width: 768px) { /*ウィンドウ幅が最大768pxまでの場合に適用*/
@@ -33,6 +48,14 @@
     tr {
         border-bottom: solid 1px #dee2e6;
         height: 50px;
+    }
+    .date-line {
+        position: relative;
+        text-align: center;
+    }
+
+    .date {
+        display: inline-block;
     }
 
     .table-size {
@@ -54,6 +77,15 @@
     tr {
         border-bottom: solid 1px #dee2e6;
         height: 50px;
+    }
+
+    .date-line {
+        position: relative;
+        text-align: center;
+    }
+
+    .date {
+        display: inline-block;
     }
 
     .table-size {

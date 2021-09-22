@@ -22,6 +22,7 @@ class CreateRestsTable extends Migration
                 ->onDelete('cascade');
             $table->time('start_rest')->nullable();
             $table->time('end_rest')->nullable();
+            $table->float('rest_time')->nullable();
             $table->timestamp('created_at')->useCurrent()->nullable();
             $table->timestamp('updated_at')->useCurrent()->nullable();
         });

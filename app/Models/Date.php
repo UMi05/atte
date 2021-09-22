@@ -17,9 +17,6 @@ class Date extends Model
         'date'
     ];
 
-    protected $dates = [
-        'date'
-    ];
 
     public function user()
     {

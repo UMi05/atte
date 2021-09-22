@@ -18,13 +18,10 @@ class Work extends Model
         'date_id',
         'start_work',
         'end_work',
+        'attendance_date',
+        'work_time',
+        'total_rest'
     ];
-
-    protected $dates = [
-        'start_work',
-        'end_work'
-    ];
-
 
     public function user()
     {

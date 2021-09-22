@@ -15,6 +15,7 @@ class Rest extends Model
         'work_id',
         'start_rest',
         'end_rest',
+        'rest_time'
     ];
 
     public function work() {
