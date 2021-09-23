@@ -17,9 +17,9 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/attendance.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/check.css') }}" rel="stylesheet">
+    <link href="{{ mix('css/app.css') }}" rel="stylesheet">
+    <link href="{{ mix('css/attendance.css') }}" rel="stylesheet">
+    <link href="{{ mix('css/check.css') }}" rel="stylesheet">
 </head>
 <body style="display: flex; flex-direction: column; min-height: 100vh;">
     <div>
