@@ -38,7 +38,7 @@
                         </li>
 
                         <li class="ml-5">
-                            <a class="text-decoration-none text-dark" href="{{ route('check') }}">
+                            <a class="text-decoration-none text-dark" href="{{ route('attendance') }}">
                                 日付一覧
                             </a>
 
