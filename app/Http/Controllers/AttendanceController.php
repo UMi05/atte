@@ -7,8 +7,6 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Date;
 use App\Models\Work;
 use App\Models\Rest;
-use App\Models\Date_User;
-use App\Models\TotalTime;
 use Carbon\Carbon;
 
 class AttendanceController extends Controller
@@ -28,11 +26,6 @@ class AttendanceController extends Controller
             ]);
             $dateStamp = Date::latest()->first();
 
-            Date_User::create([
-                'user_id' => $user->id,
-                'date_id' => $dateStamp->id
-            ]);
-
             Work::create([
                 'user_id' => $user->id,
                 'date_id' => $dateStamp->id,
@@ -51,11 +44,6 @@ class AttendanceController extends Controller
             if ($todayTimestamp == $latestDate) {
 
                 if (!$workTimestamp) {
-
-                    Date_User::create([
-                        'user_id' => $user->id,
-                        'date_id' => $dateStamp->id
-                    ]);
 
                     Work::create([
                         'user_id' => $user->id,
@@ -83,11 +71,6 @@ class AttendanceController extends Controller
                     ]);
                     $dateStamp = Date::latest()->first();
 
-                    Date_User::create([
-                        'user_id' => $user->id,
-                        'date_id' => $dateStamp->id
-                    ]);
-
                     Work::create([
                         'user_id' => $user->id,
                         'date_id' => $dateStamp->id,
@@ -106,10 +89,10 @@ class AttendanceController extends Controller
     {
 
         $user = Auth::user();
-        $date_users = Date_User::where('user_id', $user->id)->latest()->first();
+        $workTimestamp = Work::where('user_id', $user->id)->latest()->first();
 
         /** dates tableが空（出勤記録がない）または、出勤打刻前 */
-        if (!$date_users) {
+        if (!$workTimestamp) {
             return redirect()->back()->with('message', '出勤打刻されていません。');
         }
 
@@ -117,13 +100,6 @@ class AttendanceController extends Controller
         $workTimestamp = Work::where('date_id', $dateStamp->id)->where('user_id', $user->id)->latest()->first();
         $restTimestamp = Rest::where('work_id', $workTimestamp->id)->latest()->first();
         $start_work = new Carbon($workTimestamp->start_work);
-
-
-        // /**
-        //  * 退勤打刻後、押したときの処理
-        //  * 休憩終了打刻がされていなかった場合、退勤打刻時間と一緒に打刻
-        //  * 退勤打刻の処理
-        //  */
 
         $todayTimestamp = Carbon::today();
         $latestDate = new Carbon($dateStamp->date);
@@ -163,7 +139,7 @@ class AttendanceController extends Controller
 
             $rest_time = $rest_time_total;
             $working_min = $work_time - $rest_time;
-            $workingHour = ceil($working_min / 10) * 0.166;
+            $workingHour = round(($working_min / 10) * 0.166, 3);
 
             $workTimestamp->update([
                 'work_time' => $workingHour
@@ -190,7 +166,7 @@ class AttendanceController extends Controller
                 ]);
                 $rest_time = $rest_time_total;
                 $working_min = $work_time - $rest_time_total;
-                $workingHour = ceil($working_min / 10) * 0.166;
+                $workingHour = round(($working_min / 10) * 0.166, 3);
 
                 $workTimestamp->update([
                     'work_time' => $workingHour
@@ -202,9 +178,10 @@ class AttendanceController extends Controller
                 $start_work = new Carbon($workTimestamp->start_work);
                 $end_work = new carbon($workTimestamp->end_work);
                 $work_time = $start_work->diffInMinutes($end_work);
+                $workingHour = round(($work_time / 10) * 0.166, 3);
 
                 $workTimestamp->update([
-                    'work_time' => $work_time
+                    'work_time' => $workingHour
                 ]);
             }
 
@@ -227,11 +204,6 @@ class AttendanceController extends Controller
 
             $workTimestamp = Work::where('user_id', $user->id)->latest()->first();
 
-            Date_User::create([
-                'user_id' => $user->id,
-                'date_id' => $workDate->id
-            ]);
-
             return redirect()->back()->with('message', '日を跨いだため出勤打刻をします。');
 
         }
@@ -242,24 +214,13 @@ class AttendanceController extends Controller
     public function restIn()
     {
         $user = Auth::user();
-        $date_users = Date_User::where('user_id', $user->id)->latest()->first();
+        $workTimestamp = Work::where('user_id', $user->id)->latest()->first();
 
-        //** 出勤前（dates teble が空の場合のエラー防止） */
-        if (!$date_users) {
+        if (!$workTimestamp) {
             return redirect()->back()->with('message', '出勤打刻されていません。');
         }
 
-        $workDate = Date::where('id', $date_users->date_id)->latest()->first();
-        $workTimestamp = Work::where('date_id', $workDate->id)->latest()->first();
-
-        $restTimestamp = Rest::latest()->first();
-
-        /**
-        * 出勤打刻後かつ、restテーブルがからの場合
-        * 休憩終了打刻前の、休憩開始打刻の重複を防ぐ
-        * 既に、休憩済みでも何度も休憩可能にする処理
-        * 退勤打刻後、押した場合の処理
-        */
+        $restTimestamp = Rest::where('work_id', $workTimestamp->id)->latest()->first();
 
         if (($workTimestamp->start_work && !$workTimestamp->end_work) && !$restTimestamp) {
 
@@ -294,24 +255,14 @@ class AttendanceController extends Controller
     public function restOut()
     {
         $user = Auth::user();
-        $date_users = Date_User::where('user_id', $user->id)->latest()->first();
+        $workTimestamp = Work::where('user_id', $user->id)->latest()->first();
 
-        //** 出勤前（dates table が空の場合のエラー防止） */
-        if (!$date_users) {
+        if (!$workTimestamp) {
             return redirect()->back()->with('message', '出勤打刻されていません。');
         }
 
-        $workDate = Date::where('id', $date_users->date_id)->latest()->first();
-        $workTimestamp = Work::where('date_id', $workDate->id)->latest()->first();
-
         $restTimestamp = Rest::where('work_id', $workTimestamp->id)->latest()->first();
 
-        /**
-        * 休憩のレコードがない場合
-        * 休憩終了の処理
-        * 退勤打刻後、押した場合の処理
-        * 休憩開始前で押したときの処理
-        */
         if(!$restTimestamp) {
 
             return redirect()->back()->with('message', '休憩履歴がありません');
