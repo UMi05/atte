@@ -5,6 +5,10 @@
     margin: 0 auto;
 }
 
+.page-item {
+    padding-right: 200px;
+}
+
 @media screen and (min-width: 770px) {
     thead {
         height: 70px;
@@ -20,7 +24,7 @@
         text-align: center;
     }
 
-    .link-left, .link-right .page-item {
+    .link-left, .link-right {
         padding-right: 300px;
     }
 
@@ -54,7 +58,7 @@
         text-align: center;
     }
 
-    .link-left, .link-right .page-item  {
+    .link-left, .link-right {
         padding-right: 300px;
     }
 
@@ -94,7 +98,7 @@
         margin-bottom: 20px;
     }
 
-    .link-left, .link-right .page-item  {
+    .link-left, .link-right {
         padding-right: 180px;
     }
 
