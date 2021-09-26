@@ -20,7 +20,7 @@
         text-align: center;
     }
 
-    .link-left, .link-righr {
+    .link-left, .link-right .page-item {
         padding-right: 300px;
     }
 
@@ -54,7 +54,7 @@
         text-align: center;
     }
 
-    .link-left, .link-righr {
+    .link-left, .link-right .page-item  {
         padding-right: 300px;
     }
 
@@ -94,7 +94,7 @@
         margin-bottom: 20px;
     }
 
-    .link-left, .link-righr {
+    .link-left, .link-right .page-item  {
         padding-right: 180px;
     }
 
