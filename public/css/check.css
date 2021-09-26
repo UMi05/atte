@@ -5,10 +5,6 @@
     margin: 0 auto;
 }
 
-.page-item {
-    padding-right: 200px;
-}
-
 @media screen and (min-width: 770px) {
     thead {
         height: 70px;
@@ -24,8 +20,12 @@
         text-align: center;
     }
 
-    .link-left, .link-right {
-        padding-right: 300px;
+    .link-left{
+        padding-right: 150px;
+    }
+
+    .link-right {
+        padding-left: 150px;
     }
 
     .date {
@@ -58,8 +58,12 @@
         text-align: center;
     }
 
-    .link-left, .link-right {
-        padding-right: 300px;
+    .link-left{
+        padding-right: 150px;
+    }
+
+    .link-right {
+        padding-left: 150px;
     }
 
     .date {
@@ -98,8 +102,12 @@
         margin-bottom: 20px;
     }
 
-    .link-left, .link-right {
-        padding-right: 180px;
+    .link-left{
+        padding-right: 150px;
+    }
+
+    .link-right {
+        padding-left: 120px;
     }
 
     .date {
