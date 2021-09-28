@@ -34,6 +34,6 @@
             </tbody>
         </table>
     </div>
-    <div class="userPage">{{ $users->links() }}</div>
+    <div class="userPage">{{ $users->appends(request()->input())->links() }}</div>
 </div>
 @endsection

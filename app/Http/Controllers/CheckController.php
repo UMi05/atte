@@ -3,13 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\User;
 use App\Models\Date;
-use App\Models\Date_User;
 use App\Models\Work;
-use App\Models\Rest;
-use Carbon\Carbon;
-use DateTime;
+
 
 use function GuzzleHttp\Promise\all;
 

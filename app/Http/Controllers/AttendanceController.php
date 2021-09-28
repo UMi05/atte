@@ -37,48 +37,31 @@ class AttendanceController extends Controller
 
         } else {
 
-            $todayTimestamp = Carbon::today();
-            $latestDate = new Carbon($dateStamp->date);
+            $latestDateStamp = Work::where('user_id', $user->id)->where('date_id', $dateStamp->id)->latest()->first();
             $workTimestamp = Work::where('user_id', $user->id)->latest()->first();
 
-            if ($todayTimestamp == $latestDate) {
+            if (!$latestDateStamp) {
 
-                if (!$workTimestamp) {
+                Work::create([
+                    'user_id' => $user->id,
+                    'date_id' => $dateStamp->id,
+                    'start_work' => Carbon::now(),
+                    'attendance_date'=> Carbon::now()
+                ]);
 
-                    Work::create([
-                        'user_id' => $user->id,
-                        'date_id' => $dateStamp->id,
-                        'start_work' => Carbon::now(),
-                        'attendance_date'=> Carbon::now()
-                    ]);
+                return redirect()->back()->with('message', 'おはようございます、本日もよろしくお願いします。');
 
-                    return redirect()->back()->with('message', 'おはようございます、本日もよろしくお願いします。');
+            } elseif ($latestDateStamp) {
 
-                } elseif (!$workTimestamp->end_work) {
+                if ($workTimestamp->start_work && !$workTimestamp->end_work) {
 
-                    return redirect()->back()->with('message', '出勤済みです');
+                    return redirect()->back()->with('message', '出勤打刻済みです。');
 
                 } elseif ($workTimestamp->end_work) {
 
-                    return redirect()->back()->with('message', '本日の業務は終了しています。');
+                    return redirect()->back()->with('message', '退勤済みです。');
 
                 }
-
-            } elseif (($todayTimestamp != $latestDate)) {
-
-                    Date::create([
-                        'date' => Carbon::today()
-                    ]);
-                    $dateStamp = Date::latest()->first();
-
-                    Work::create([
-                        'user_id' => $user->id,
-                        'date_id' => $dateStamp->id,
-                        'start_work' => Carbon::now(),
-                        'attendance_date'=> Carbon::now()
-                    ]);
-
-                    return redirect()->back()->with('message', 'おはようございます、本日もよろしくお願いします。');
 
             }
         }
@@ -93,118 +76,140 @@ class AttendanceController extends Controller
 
         /** dates tableが空（出勤記録がない）または、出勤打刻前 */
         if (!$workTimestamp) {
+
             return redirect()->back()->with('message', '出勤打刻されていません。');
+
         }
 
         $dateStamp = Date::latest()->first();
         $workTimestamp = Work::where('date_id', $dateStamp->id)->where('user_id', $user->id)->latest()->first();
-        $restTimestamp = Rest::where('work_id', $workTimestamp->id)->latest()->first();
-        $start_work = new Carbon($workTimestamp->start_work);
 
-        $todayTimestamp = Carbon::today();
-        $latestDate = new Carbon($dateStamp->date);
+        $latestDateStamp = Work::where('user_id', $user->id)->where('date_id', $dateStamp->id)->latest()->first();
 
-        if ($workTimestamp->end_work && ($latestDate == $todayTimestamp)) {
+        if ($latestDateStamp) {
 
-            return redirect()->back()->with('message', '退勤済みです。');
+            $start_work = new Carbon($workTimestamp->start_work);
 
-        }elseif ($restTimestamp && !$restTimestamp->end_rest && ($latestDate == $todayTimestamp)) {
+            if ($workTimestamp->end_work) {
 
-            $restTimestamp->update([
-                'end_rest' => Carbon::now()
-            ]);
+                return redirect()->back()->with('message', '退勤済みです。');
 
-            $workTimestamp->update([
-                'end_work' => Carbon::now()
-            ]);
+            } elseif (!$workTimestamp->end_work) {
 
-            $restTimestamp = Rest::where('work_id', $workTimestamp->id)->latest()->first();
-            $start_rest = new Carbon($restTimestamp->start_rest);
-            $end_rest = new Carbon($restTimestamp->end_rest);
-            $rest_time = $start_rest->diffInMinutes($end_rest);
+                $restTimestamp = Rest::where('work_id', $latestDateStamp->id)->latest()->first();
 
-            $restTimestamp->update([
-                'rest_time' => $rest_time
-            ]);
+                if (!$restTimestamp) {
 
-            $rest_time_total = Rest::where('work_id', $workTimestamp->id)->sum('rest_time');
-            $workTimestamp->update([
-                'total_rest' => $rest_time_total
-            ]);
+                    $workTimestamp->update([
+                        'end_work' => Carbon::now()
+                    ]);
 
-            $workTimestamp = Work::where('date_id', $dateStamp->id)->where('user_id', $user->id)->latest()->first();
+                    $workTimestamp = Work::where('date_id', $dateStamp->id)->where('user_id', $user->id)->latest()->first();
+                    $end_work = new carbon($workTimestamp->end_work);
+                    $work_time = $start_work->diffInMinutes($end_work);
+                    $workingHour = round(($work_time / 10) * 0.166, 3);
 
-            $end_work = new carbon($workTimestamp->end_work);
-            $work_time = $start_work->diffInMinutes($end_work);
+                    $workTimestamp->update([
+                        'work_time' => $workingHour
+                    ]);
 
-            $rest_time = $rest_time_total;
-            $working_min = $work_time - $rest_time;
-            $workingHour = round(($working_min / 10) * 0.166, 3);
+                    return redirect()->back()->with('message', 'お疲れ様でした。');
 
-            $workTimestamp->update([
-                'work_time' => $workingHour
-            ]);
+                } elseif (!$restTimestamp->end_rest) {
 
-            return redirect()->back()->with('message', 'お疲れ様でした。');
+                        $restTimestamp = Rest::where('work_id', $latestDateStamp->id)->latest()->first();
 
-        } elseif ($workTimestamp->start_work && !$workTimestamp->end_work && ($latestDate == $todayTimestamp)) {
+                        $restTimestamp->update([
+                            'end_rest' => Carbon::now()
+                        ]);
 
-            $workTimestamp->update([
-                'end_work' => Carbon::now()
-            ]);
+                        $start_rest = new Carbon($restTimestamp->start_rest);
+                        $end_rest = new Carbon($restTimestamp->end_rest);
+                        $rest_time = $start_rest->diffInMinutes($end_rest);
 
-            $workTimestamp = Work::where('date_id', $dateStamp->id)->where('user_id', $user->id)->latest()->first();
+                        $restTimestamp->update([
+                            'rest_time' => $rest_time
+                        ]);
 
-            $end_work = new carbon($workTimestamp->end_work);
-            $work_time = $start_work->diffInMinutes($end_work);
+                        $rest_time_total = Rest::where('work_id', $workTimestamp->id)->sum('rest_time');
+                        $workTimestamp->update([
+                            'total_rest' => $rest_time_total
+                        ]);
 
-            if ($restTimestamp) {
+                        $workTimestamp->update([
+                            'end_work' => Carbon::now()
+                        ]);
 
-                $rest_time_total = Rest::where('work_id', $workTimestamp->id)->sum('rest_time');
-                $workTimestamp->update([
-                    'total_rest' => $rest_time_total
-                ]);
-                $rest_time = $rest_time_total;
-                $working_min = $work_time - $rest_time_total;
-                $workingHour = round(($working_min / 10) * 0.166, 3);
+                        $workTimestamp = Work::where('date_id', $dateStamp->id)->where('user_id', $user->id)->latest()->first();
+                        $end_work = new carbon($workTimestamp->end_work);
+                        $work_time = $start_work->diffInMinutes($end_work);
+                        $workingHour = round(($work_time / 10) * 0.166, 3);
 
-                $workTimestamp->update([
-                    'work_time' => $workingHour
-                ]);
+                        $workTimestamp->update([
+                            'work_time' => $workingHour
+                        ]);
 
-            } elseif (!$restTimestamp) {
+                        return redirect()->back()->with('message', 'お疲れ様でした。');
 
-                $workTimestamp = Work::where('date_id', $dateStamp->id)->where('user_id', $user->id)->latest()->first();
-                $start_work = new Carbon($workTimestamp->start_work);
-                $end_work = new carbon($workTimestamp->end_work);
-                $work_time = $start_work->diffInMinutes($end_work);
-                $workingHour = round(($work_time / 10) * 0.166, 3);
+                    } elseif ($restTimestamp) {
 
-                $workTimestamp->update([
-                    'work_time' => $workingHour
-                ]);
+                    if ($restTimestamp->end_rest) {
+
+                        $rest_time_total = Rest::where('work_id', $workTimestamp->id)->sum('rest_time');
+                        $workTimestamp->update([
+                            'total_rest' => $rest_time_total
+                        ]);
+
+                        $workTimestamp->update([
+                            'end_work' => Carbon::now()
+                        ]);
+
+                        $workTimestamp = Work::where('date_id', $dateStamp->id)->where('user_id', $user->id)->latest()->first();
+                        $end_work = new carbon($workTimestamp->end_work);
+                        $work_time = $start_work->diffInMinutes($end_work);
+                        $workingHour = round(($work_time / 10) * 0.166, 3);
+
+                        $workTimestamp->update([
+                            'work_time' => $workingHour
+                        ]);
+
+                        return redirect()->back()->with('message', 'お疲れ様でした。');
+
+                    }
+
+                }
             }
 
-            return redirect()->back()->with('message', 'お疲れ様でした。');
+        } elseif (!$latestDateStamp) {
 
-        } elseif ($workTimestamp->start_work && !$workTimestamp->end_work && ($latestDate !== $todayTimestamp)) {
-
-            Date::create([
-                'date' => Carbon::today()
-            ]);
-
-            $workDate = Date::latest()->first();
-
-            Work::create([
-                'user_id' => $user->id,
-                'date_id' => $workDate->id,
-                'start_work' => Carbon::now(),
-                'attendance_date'=> Carbon::now()
-            ]);
-
+            $latestDate = $dateStamp->date;
+            $todayTimestamp = Carbon::now();
             $workTimestamp = Work::where('user_id', $user->id)->latest()->first();
 
-            return redirect()->back()->with('message', '日を跨いだため出勤打刻をします。');
+            if ($workTimestamp->start_work && !$workTimestamp->end_work && ($latestDate !== $todayTimestamp)) {
+
+                Date::create([
+                    'date' => Carbon::today()
+                ]);
+
+                $workDate = Date::latest()->first();
+
+                Work::create([
+                    'user_id' => $user->id,
+                    'date_id' => $workDate->id,
+                    'start_work' => Carbon::now(),
+                    'attendance_date'=> Carbon::now()
+                ]);
+
+                $workTimestamp = Work::where('user_id', $user->id)->latest()->first();
+
+                return redirect()->back()->with('message', '日を跨いだため出勤打刻をします。');
+
+            } else {
+
+                return redirect()->back()->with('message', '出勤打刻されていません。');
+
+            }
 
         }
 
