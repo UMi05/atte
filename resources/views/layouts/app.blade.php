@@ -68,6 +68,5 @@
             <a style="text-align: center; font-weight: bolder; font-size: 15px; text-decoration: none; color: black;" href="/">Atte, inc.</a>
         </footer>
     </div>
-    <script src="{{ asset('/js/attendance.js') }}"></script>
 </body>
 </html>
