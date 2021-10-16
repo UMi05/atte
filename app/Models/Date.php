@@ -18,9 +18,9 @@ class Date extends Model
     ];
 
 
-    public function user()
+    public function users()
     {
-        return $this->belongsToMany(Date_User::class);
+        return $this->belongsToMany(User::class);
     }
 
     public function works()

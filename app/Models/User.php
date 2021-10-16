@@ -59,7 +59,7 @@ class User extends Authenticatable
         $this->notify(new UserResetPassword($token));
     }
 
-    public function date()
+    public function dates()
     {
         return $this->belongsToMany(Date::class);
     }
