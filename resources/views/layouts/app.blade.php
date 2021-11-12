@@ -1,5 +1,5 @@
 <!doctype html>
-<html style="height: 100vh;" lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html style="height: 100%;" lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -25,7 +25,7 @@
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
 
 </head>
-<body style="display: flex; flex-direction: column; min-height: 100vh;">
+<body style="display: flex; flex-direction: column; height: 100%;">
     <header>
         <a class="logo" href="{{ route('home') }}">
             {{ config('app.name', 'Atte') }}
@@ -89,7 +89,7 @@
         </nav>
     </header>
 
-    <main class="py-4" style="flex: 1; height: 100vh;">
+    <main class="py-5" style="flex: 1; height: 100%;">
         @yield('content')
     </main>
     <footer style="display: flex; justify-content: center; align-items: center; background-color: white; height: 50px; width: 100%;">
