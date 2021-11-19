@@ -42,6 +42,11 @@ class AttendanceController extends Controller
 
             if (!$latestDateStamp) {
 
+                Date::create([
+                    'date' => Carbon::today()
+                ]);
+                $dateStamp = Date::latest()->first();
+
                 Work::create([
                     'user_id' => $user->id,
                     'date_id' => $dateStamp->id,
