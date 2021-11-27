@@ -6,9 +6,6 @@ use Illuminate\Http\Request;
 use App\Models\Date;
 use App\Models\Work;
 
-
-use function GuzzleHttp\Promise\all;
-
 class CheckController extends Controller
 {
     public function index()
