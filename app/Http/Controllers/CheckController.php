@@ -19,10 +19,6 @@ class CheckController extends Controller
             return redirect()->back()->with('message', '勤務履歴がありません。');
         }
 
-        $users = Work::join('dates', 'dates.id', 'works.date_id')
-        ->join('users', 'users.id', 'user_id')
-        ->get();
-
         $allDate = Date::select('date')->simplePaginate(1, ["*"], 'datePage');
 
         foreach ($allDate as $date) {
