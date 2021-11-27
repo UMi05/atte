@@ -34,3 +34,6 @@ Route::post('/restout', [AttendanceController::class, 'restOut'])->name('restout
 
 //日付一覧
 Route::get('/attendance', [CheckController::class, 'index'])->name('attendance');
+
+//マイページ
+Route::get('/mypage', [MyPageController::class, 'index'])->name('mypage');
