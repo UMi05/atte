@@ -45,6 +45,12 @@
                 </li>
 
                 <li class="ml-5">
+                    <a href="{{ route('mypage') }}">
+                        マイページ
+                    </a>
+                </li>
+
+                <li class="ml-5">
                     <a href="{{ route('logout') }}"
                     onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                         {{ __('Logout') }}
@@ -72,6 +78,12 @@
                 <li>
                     <a href="{{ route('attendance') }}">
                         日付一覧
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{{ route('mypage') }}">
+                        マイページ
                     </a>
                 </li>
 
